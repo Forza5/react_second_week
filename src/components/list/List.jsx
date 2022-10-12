@@ -17,6 +17,10 @@ const List = () => {
         dispatch(toggleStatusTodo(id));
     }
 
+    const onUpdate = () => {
+        
+    }
+
     return(
         <>
             <h1>Working</h1>

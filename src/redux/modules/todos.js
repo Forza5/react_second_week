@@ -2,6 +2,7 @@
 const ADD_TODO = "ADD_TODO";
 const DELETE_TODO = "DELETE_TODO";
 const TOGGLE_STATUS_TODO = "TOGGLE_STATUS_TODO";
+const GET_TODO_BY_ID = "GET_TODO_BY_ID";
 
 //Initial State
 const initialState = {
@@ -18,7 +19,10 @@ const initialState = {
             body: "우우",
             isDone: false,
         }
-    ]
+    ],
+    todo: {
+
+    }
 }
 
 //Action Creator
@@ -48,6 +52,12 @@ export const toggleStatusTodo = (payload) => {
     }
 }
 
+export const getTodoById = (payload) => {
+    return{
+        type: GET_TODO_BY_ID, payload
+    }
+}
+
 //Reducer
 const todos = (state = initialState, action) => {
     switch(action.type){
@@ -71,6 +81,11 @@ const todos = (state = initialState, action) => {
                     todo.id === action.payload ? {...todo, isDone: !todo.isDone} : todo
                     )
                 ]
+            }
+        case GET_TODO_BY_ID:
+            return{
+                ...state,
+                todo: [...state.todos].find((todo) =>todo.id === action.payload)
             }
         default:
             return state;

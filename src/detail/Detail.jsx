@@ -1,33 +1,40 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { getTodoById } from "../redux/modules/todos";
 
 const Detail = () => {
-    const lists = useSelector((state) => state.todos.todos);
+    const lists = useSelector((state) => state.todos.todo);
     console.log(lists);
 
     let params = useParams();
     console.log(params);
     
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const mainPage = () => {
         navigate('/');
     }
 
-    const Details = lists.find((todo) => todo.id === +params.id);
-    const { id, title, body } = Details;
-    console.log(Details);
+    useEffect(() => {
+        dispatch(getTodoById(+params.id))
+    },[dispatch, params])
+
+    // const Details = lists.find((todo) => todo.id === +params.id);
+    // const { id, title, body } = Details;
+    // console.log(Details);
 
     return(
         <BoxAll>
             <BoxCont>
                 <BtnBack>
-                    <p>ID: {id}</p>
+                    <p>ID: {lists.id}</p>
                     <BtnMain onClick={mainPage}>이전으로</BtnMain>
                 </BtnBack>
                 <div>
-                    <h2>{title}</h2>
-                    <p>{body}</p>
+                    <h2>{lists.title}</h2>
+                    <p>{lists.body}</p>
                 </div>
             </BoxCont>
         </BoxAll>
